@@ -1,26 +1,30 @@
 .dock-outer {
-  position: fixed; /* Фиксируем меню на экране */
-  bottom: 20px;    /* Отступ снизу */
+  position: fixed;
+  bottom: 20px;
   left: 0;
   width: 100%;
+  height: auto !important; /* Запрещаем менять высоту контейнеру */
   display: flex;
-  justify-content: center; /* Центрируем по горизонтали */
-  z-index: 9999; /* Поверх всего сайта */
-  pointer-events: none; /* Пропускаем клики мимо пустого места */
+  justify-content: center;
+  align-items: flex-end; /* ВАЖНО: Прижимаем всё к низу, чтобы росло вверх */
+  z-index: 9999;
+  pointer-events: none;
 }
 
 .dock-panel {
   display: flex;
-  align-items: flex-end;
+  align-items: flex-end; /* Иконки тоже прижимаем к низу */
   width: fit-content;
   gap: 1rem;
   border-radius: 1rem;
-  background-color: rgba(6, 0, 16, 0.85); /* Полупрозрачный черный фон */
-  backdrop-filter: blur(12px); /* Размытие фона под меню */
-  border: 1px solid rgba(139, 92, 246, 0.3); /* Фиолетовая обводка */
-  padding: 0 0.5rem 0.5rem;
-  pointer-events: auto; /* Включаем клики на самом меню */
+  background-color: rgba(6, 0, 16, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  padding: 10px; /* Фиксированный отступ внутри */
+  padding-bottom: 8px; /* Чтобы иконки не прилипали к краю */
+  pointer-events: auto;
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  margin-bottom: 0; /* Убираем лишние отступы */
 }
 
 .dock-item {
@@ -29,28 +33,30 @@
   align-items: center;
   justify-content: center;
   border-radius: 12px;
-  background-color: #0f0518; /* Темно-фиолетовый фон кнопок */
+  background-color: #0f0518;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   outline: none;
   transition: border-color 0.2s;
+  /* Важно для стабильности: */
+  transform-origin: bottom center; 
 }
 
 .dock-item:hover {
-  border-color: #8b5cf6; /* Фиолетовая рамка при наведении */
+  border-color: #8b5cf6;
 }
 
 .dock-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff; /* Белые иконки */
+  color: #fff;
 }
 
 .dock-label {
   position: absolute;
-  top: -40px; /* Надпись над иконкой */
+  top: -45px; /* Подняли чуть выше, чтобы не наезжало */
   left: 50%;
   transform: translateX(-50%);
   width: fit-content;

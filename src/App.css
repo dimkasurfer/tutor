@@ -1,4 +1,3 @@
-/* --- ГЛОБАЛЬНЫЕ НАСТРОЙКИ --- */
 :root {
   --bg-color: #000000;
   --text-color: #f3f4f6;
@@ -17,41 +16,32 @@ body, html, #root {
 h1, h2, h3 { font-family: 'Playfair Display', serif; }
 a { text-decoration: none; color: inherit; transition: 0.3s; }
 
-/* --- HERO SECTION --- */
+/* HERO (ОБЩЕЕ) */
 .hero {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  overflow: hidden;
-  background-color: #000;
-  padding-left: 5%;
+  position: relative; width: 100vw; height: 100vh;
+  display: flex; align-items: center; overflow: hidden; background-color: #000;
 }
 
+/* Специфика DESKTOP */
+.desktop-hero { justify-content: flex-start; padding-left: 5%; }
+
+/* Специфика MOBILE */
+.mobile-hero { justify-content: center; padding-left: 0; text-align: center; }
+
+/* Фон и Лазер */
 .reveal-bg {
   position: absolute; top: 0; left: 0; width: 100%; height: 100%;
   background-size: cover; background-position: center; opacity: 0.5; z-index: 1; pointer-events: none;
   mask-image: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), black 0%, transparent 300px);
   -webkit-mask-image: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), black 0%, transparent 300px);
 }
+.laser-wrapper { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; mix-blend-mode: screen; }
 
-.laser-wrapper {
-  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-  z-index: 2; pointer-events: none; mix-blend-mode: screen;
-}
-
-/* ТЕКСТ */
-.hero-content {
-  position: relative;
-  z-index: 20;
-  width: 50%;
-  max-width: 700px;
-}
+/* Контент */
+.hero-content { position: relative; z-index: 20; width: 50%; max-width: 700px; }
 .hero h1 { font-size: 4rem; line-height: 1.1; margin-bottom: 20px; color: #fff; }
 .accent-text { color: var(--accent-color); text-shadow: 0 0 30px rgba(139, 92, 246, 0.8); }
-.hero p { font-size: 1.3rem; color: #ccc; margin-bottom: 40px; max-width: 90%; }
+.hero p { font-size: 1.3rem; color: #ccc; margin-bottom: 40px; }
 
 .cta-btn {
   display: inline-block; padding: 15px 40px; border: 1px solid var(--accent-color);
@@ -60,23 +50,13 @@ a { text-decoration: none; color: inherit; transition: 0.3s; }
 }
 .cta-btn:hover { background: var(--accent-color); color: #fff; box-shadow: 0 0 20px var(--accent-color); }
 
-/* ФОТО (КОМПЬЮТЕРНАЯ ВЕРСИЯ) */
+/* ФОТО */
 .hero-photo {
-  position: absolute;
-  bottom: -5vh;
-  right: -10vw;
-  height: 110vh;
-  width: auto;
-  min-width: 600px;
-  max-width: none !important;
-  z-index: 10;
-  pointer-events: none;
-  filter: drop-shadow(-20px 0 30px rgba(0,0,0,0.8));
-  transform: scale(1.1); 
-  transform-origin: bottom right;
+  position: absolute; bottom: -5vh; right: -10vw; height: 110vh; width: auto; min-width: 600px; max-width: none !important;
+  z-index: 10; pointer-events: none; filter: drop-shadow(-20px 0 30px rgba(0,0,0,0.8)); transform: scale(1.1); transform-origin: bottom right;
 }
 
-/* --- ОСТАЛЬНЫЕ СЕКЦИИ --- */
+/* ОСТАЛЬНЫЕ СЕКЦИИ */
 section:not(.hero) { padding: 100px 10%; position: relative; z-index: 5; background: var(--bg-color); }
 .section-title { font-size: 3rem; margin-bottom: 60px; border-left: 5px solid var(--accent-color); padding-left: 20px; opacity: 0; color: #fff; }
 
@@ -106,34 +86,9 @@ footer { padding: 40px; text-align: center; color: #666; border-top: 1px solid #
 @keyframes loading { 0% { left: -50%; } 100% { left: 100%; } }
 @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
 
-/* --- МОБИЛЬНАЯ ВЕРСИЯ (ИСПРАВЛЕНИЯ) --- */
+/* МОБИЛЬНЫЕ ПРАВКИ */
 @media (max-width: 900px) {
-  .hero { 
-    flex-direction: column; 
-    justify-content: center; /* Центрируем по вертикали */
-    padding-left: 0; 
-    text-align: left; /* Текст слева */
-    padding-top: 0;
-  }
-
-  /* 1. Скрываем фото на главном экране телефона */
-  .hero-photo {
-    display: none !important;
-  }
-
-  /* 2. Уменьшаем текст */
-  .hero-content { 
-    width: 100%; 
-    padding: 0 30px; /* Отступы по бокам */
-    margin-bottom: 0;
-    max-width: 100%;
-  }
-  .hero h1 { font-size: 1.8rem; line-height: 1.3; } /* Еще меньше шрифт */
-  .hero p { font-size: 1rem; }
-
-  /* 3. Фото в блоке "Опыт" делаем видным */
-  .experience-container { flex-direction: column-reverse; /* Фото сверху таймлайна, если хочешь */ }
+  .experience-container { flex-direction: column-reverse; }
   .experience-image-block { margin-bottom: 40px; width: 100%; }
-  
   section:not(.hero) { padding: 60px 20px; }
 }
