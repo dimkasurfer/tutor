@@ -1,0 +1,67 @@
+.dock-outer {
+  position: fixed; /* Фиксируем меню на экране */
+  bottom: 20px;    /* Отступ снизу */
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center; /* Центрируем по горизонтали */
+  z-index: 9999; /* Поверх всего сайта */
+  pointer-events: none; /* Пропускаем клики мимо пустого места */
+}
+
+.dock-panel {
+  display: flex;
+  align-items: flex-end;
+  width: fit-content;
+  gap: 1rem;
+  border-radius: 1rem;
+  background-color: rgba(6, 0, 16, 0.85); /* Полупрозрачный черный фон */
+  backdrop-filter: blur(12px); /* Размытие фона под меню */
+  border: 1px solid rgba(139, 92, 246, 0.3); /* Фиолетовая обводка */
+  padding: 0 0.5rem 0.5rem;
+  pointer-events: auto; /* Включаем клики на самом меню */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.dock-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background-color: #0f0518; /* Темно-фиолетовый фон кнопок */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.dock-item:hover {
+  border-color: #8b5cf6; /* Фиолетовая рамка при наведении */
+}
+
+.dock-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff; /* Белые иконки */
+}
+
+.dock-label {
+  position: absolute;
+  top: -40px; /* Надпись над иконкой */
+  left: 50%;
+  transform: translateX(-50%);
+  width: fit-content;
+  white-space: pre;
+  border-radius: 6px;
+  border: 1px solid #333;
+  background-color: #000;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-family: 'Montserrat', sans-serif;
+  color: #fff;
+  pointer-events: none;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}

@@ -1,0 +1,227 @@
+/* --- ГЛОБАЛЬНЫЕ НАСТРОЙКИ --- */
+:root {
+  --bg-color: #000000;          /* Черный фон */
+  --text-color: #f3f4f6;        /* Белый текст */
+  --accent-color: #8b5cf6;      /* Фиолетовый акцент */
+  --secondary-bg: #0f0518;      /* Темно-фиолетовый для карточек */
+}
+
+/* СБРОС СТИЛЕЙ (Важно!) */
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-color) !important; /* Принудительно черный */
+  color: var(--text-color);
+  font-family: 'Montserrat', sans-serif;
+  overflow-x: hidden;
+}
+
+h1, h2, h3 { font-family: 'Playfair Display', serif; }
+a { text-decoration: none; color: inherit; transition: 0.3s; }
+
+/* --- НАВИГАЦИЯ --- */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+  background: rgba(0,0,0,0.5); /* Полупрозрачный черный */
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+}
+.logo { font-weight: 800; font-size: 1.2rem; color: var(--accent-color); }
+.nav-links a { margin-left: 30px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: #fff; }
+.nav-links a:hover { color: var(--accent-color); }
+
+/* --- HERO SECTION (Первый экран) --- */
+.hero {
+  position: relative;
+  width: 100vw;
+  height: 100vh; /* Строго на высоту экрана */
+  display: flex;
+  align-items: center; /* Центрируем текст по вертикали */
+  justify-content: flex-start; /* Текст прижимаем влево */
+  overflow: hidden;
+  background-color: #000;
+  padding-left: 5%; /* Отступ текста от левого края */
+}
+
+/* СЛОИ (Z-INDEX) */
+.reveal-bg {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  background-size: cover; background-position: center; opacity: 0.5; z-index: 1; pointer-events: none;
+  /* Эффект фонарика */
+  mask-image: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), black 0%, transparent 300px);
+  -webkit-mask-image: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), black 0%, transparent 300px);
+}
+
+.laser-wrapper {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 2; /* Лазер над фоном */
+  pointer-events: none;
+  mix-blend-mode: screen; /* Режим наложения */
+}
+
+/* ТЕКСТ (Слева) */
+.hero-content {
+  position: relative;
+  z-index: 20; /* Выше лазера и фото */
+  width: 50%;  /* Занимает левую половину */
+  max-width: 700px;
+}
+.hero h1 { font-size: 4rem; line-height: 1.1; margin-bottom: 20px; color: #fff; }
+.accent-text { color: var(--accent-color); text-shadow: 0 0 30px rgba(139, 92, 246, 0.8); }
+.hero p { font-size: 1.3rem; color: #ccc; margin-bottom: 40px; max-width: 90%; }
+
+.cta-btn {
+  display: inline-block; padding: 15px 40px; border: 1px solid var(--accent-color);
+  color: var(--accent-color); font-weight: 600; text-transform: uppercase;
+  background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); cursor: pointer;
+}
+.cta-btn:hover { background: var(--accent-color); color: #fff; box-shadow: 0 0 20px var(--accent-color); }
+
+/* ... остальной код выше без изменений ... */
+
+/* ... остальной код выше без изменений ... */
+
+.hero-photo {
+  position: absolute;
+  bottom: -5vh;    /* Опускаем ниже экрана, чтобы обрезать ноги */
+  right: -10vw;    /* Сдвигаем вправо за экран */
+  
+  /* ЖЕСТКИЕ РАЗМЕРЫ */
+  height: 110vh;       /* 110% высоты экрана - оно должно стать огромным */
+  width: auto;         /* Ширина подстроится */
+  min-width: 600px;    /* Минимальная ширина, чтобы на больших экранах не было мелким */
+  max-width: none !important; /* ЗАПРЕЩАЕМ ограничивать ширину */
+  
+  z-index: 10;
+  pointer-events: none;
+  filter: drop-shadow(-20px 0 30px rgba(0,0,0,0.8));
+  
+  /* Если всё равно мелко - крути scale */
+  transform: scale(1.1); 
+  transform-origin: bottom right;
+}
+
+/* Для мобилок фото нужно сделать меньше и убрать назад */
+@media (max-width: 900px) {
+  .hero-photo {
+    height: 60vh;
+    right: -20%;
+    bottom: 0;
+    opacity: 0.4; /* Полупрозрачное, чтобы текст читался поверх */
+    z-index: 0;
+  }
+}
+
+/* Для больших экранов */
+@media (min-width: 1600px) {
+  .hero-photo {
+    height: 95vh;
+    right: 5%;
+    transform: scale(1.0);
+  }
+}
+
+/* На очень больших мониторах */
+@media (min-width: 1600px) {
+  .hero-photo {
+    right: 5%;
+    height: 100vh;
+  }
+}
+
+/* На ноутбуках поменьше */
+@media (max-width: 1400px) {
+  .hero-photo {
+    right: -10%; /* Сдвигаем сильнее вправо, чтобы влез текст */
+    height: 100vh;
+  }
+}
+
+/* Адаптив для больших экранов */
+@media (min-width: 1600px) {
+  .hero-photo {
+    right: 5%; /* На очень широких экранах отодвигаем от края */
+  }
+}
+
+/* ... остальной код ниже без изменений ... */
+
+/* Адаптив для больших экранов */
+@media (min-width: 1600px) {
+  .hero-photo {
+    right: 5%; /* На очень широких экранах отодвигаем от края */
+  }
+}
+
+/* ... остальной код ниже без изменений ... */
+
+/* --- ОСТАЛЬНЫЕ СЕКЦИИ --- */
+section:not(.hero) { 
+  padding: 100px 10%; 
+  position: relative; 
+  z-index: 5; 
+  background: var(--bg-color); 
+}
+
+.section-title { font-size: 3rem; margin-bottom: 60px; border-left: 5px solid var(--accent-color); padding-left: 20px; opacity: 0; color: #fff; }
+
+/* Опыт */
+.experience-container { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; }
+.timeline { flex: 1; min-width: 300px; border-left: 2px solid rgba(139, 92, 246, 0.3); margin-left: 20px; }
+.timeline-item { margin-bottom: 50px; padding-left: 30px; position: relative; opacity: 0; }
+.timeline-item::before { content: ''; position: absolute; left: -11px; top: 5px; width: 20px; height: 20px; background: var(--accent-color); border-radius: 50%; box-shadow: 0 0 15px var(--accent-color); }
+.year { color: var(--accent-color); font-weight: bold; display: block; margin-bottom: 5px; }
+.role { font-size: 1.4rem; font-weight: 600; margin-bottom: 10px; color: #fff; }
+.desc { color: #aaa; }
+
+.experience-image-block { flex: 1; display: flex; justify-content: center; align-items: center; }
+.experience-photo { max-width: 100%; height: auto; max-height: 500px; object-fit: contain; opacity: 0; }
+
+/* Услуги */
+.services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+.card { background: var(--secondary-bg); padding: 40px; border: 1px solid rgba(139, 92, 246, 0.1); opacity: 0; color: #fff; }
+.card:hover { transform: translateY(-10px); border-color: var(--accent-color); }
+.price { font-size: 1.8rem; display: block; margin: 20px 0; color: #fff; }
+
+/* Футер */
+footer { padding: 40px; text-align: center; color: #666; border-top: 1px solid #222; background: #000; }
+
+/* --- ЭКРАН ЗАГРУЗКИ --- */
+.loader {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999;
+}
+.loader-text { color: var(--accent-color); font-weight: 800; letter-spacing: 3px; margin-bottom: 20px; animation: pulse 1.5s infinite; }
+.loader-bar { width: 200px; height: 2px; background: #333; position: relative; overflow: hidden; }
+.loader-bar::after { content: ''; position: absolute; top: 0; left: 0; height: 100%; width: 50%; background: var(--accent-color); animation: loading 2s ease-in-out infinite; box-shadow: 0 0 15px var(--accent-color); }
+
+.app-container { opacity: 0; transition: opacity 1s ease; }
+.app-container.visible { opacity: 1; }
+
+@keyframes loading { 0% { left: -50%; } 100% { left: 100%; } }
+@keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+
+/* Адаптив для мобильных */
+@media (max-width: 900px) {
+  .hero { flex-direction: column; justify-content: center; padding-left: 0; text-align: center; }
+  .hero-content { width: 100%; padding: 0 20px; z-index: 20; margin-top: 80px; }
+  .hero-photo { 
+    position: relative; 
+    height: 50vh; 
+    right: auto; 
+    bottom: auto; 
+    margin-top: -20px; 
+    z-index: 10;
+  }
+  .nav-links { display: none; }
+}
