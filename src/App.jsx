@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import LaserFlow from './LaserFlow';
-// 1. Импортируем Меню и Иконки
 import Dock from './Dock';
 import { VscHome, VscAccount, VscBriefcase, VscCommentDiscussion } from "react-icons/vsc";
 import './App.css';
@@ -12,38 +11,27 @@ gsap.registerPlugin(ScrollTrigger);
 function App() {
   const heroRef = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
 
-  // 2. Настройки пунктов меню (куда скроллить при клике)
+  // Следим за размером экрана для адаптации лазера
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 900);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const items = [
-    { 
-      icon: <VscHome size={24} color="#fff" />, 
-      label: 'Домой', 
-      onClick: () => window.scrollTo({ top: 0, behavior: 'smooth' }) 
-    },
-    { 
-      icon: <VscAccount size={24} color="#fff" />, 
-      label: 'Обо мне', 
-      onClick: () => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' }) 
-    },
-    { 
-      icon: <VscBriefcase size={24} color="#fff" />, 
-      label: 'Услуги', 
-      onClick: () => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' }) 
-    },
-    { 
-      icon: <VscCommentDiscussion size={24} color="#fff" />, 
-      label: 'Контакты', 
-      onClick: () => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }) 
-    },
+    { icon: <VscHome size={24} color="#fff" />, label: 'Домой', onClick: () => window.scrollTo({ top: 0, behavior: 'smooth' }) },
+    { icon: <VscAccount size={24} color="#fff" />, label: 'Обо мне', onClick: () => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' }) },
+    { icon: <VscBriefcase size={24} color="#fff" />, label: 'Услуги', onClick: () => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' }) },
+    { icon: <VscCommentDiscussion size={24} color="#fff" />, label: 'Контакты', onClick: () => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }) },
   ];
 
-  // Имитация загрузки
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 2500);
     return () => clearTimeout(timer);
   }, []);
 
-  // Логика фонарика (слежение за мышью)
   const handleMouseMove = (e) => {
     if (heroRef.current) {
       const rect = heroRef.current.getBoundingClientRect();
@@ -54,50 +42,29 @@ function App() {
     }
   };
 
-  // Анимации появления (GSAP)
   useEffect(() => {
     if (!isLoading) {
-      // Фото выезжает справа
       gsap.fromTo(".hero-photo", 
         { x: 100, opacity: 0 },
         { x: 0, opacity: 1, duration: 1.5, delay: 0.5, ease: "power3.out" }
       );
-
-      // Заголовки
       gsap.utils.toArray(".section-title").forEach(title => {
-        gsap.to(title, {
-          scrollTrigger: { trigger: title, start: "top 80%" },
-          opacity: 1, x: 20, duration: 1
-        });
+        gsap.to(title, { scrollTrigger: { trigger: title, start: "top 80%" }, opacity: 1, x: 20, duration: 1 });
       });
-      
-      // Таймлайн
       gsap.utils.toArray(".timeline-item").forEach((item, i) => {
-        gsap.to(item, {
-          scrollTrigger: { trigger: item, start: "top 85%" },
-          opacity: 1, x: 0, duration: 0.8, delay: i * 0.2
-        });
+        gsap.to(item, { scrollTrigger: { trigger: item, start: "top 85%" }, opacity: 1, x: 0, duration: 0.8, delay: i * 0.2 });
       });
-
-      // Фото в опыте
       gsap.to(".experience-photo", {
-        scrollTrigger: { trigger: "#experience", start: "top 70%" },
-        opacity: 1, scale: 1, duration: 1, ease: "back.out(1.7)"
+        scrollTrigger: { trigger: "#experience", start: "top 70%" }, opacity: 1, scale: 1, duration: 1, ease: "back.out(1.7)"
       });
-      
-      // Карточки
       gsap.utils.toArray(".card").forEach((card, i) => {
-        gsap.to(card, {
-          scrollTrigger: { trigger: card, start: "top 90%" },
-          opacity: 1, y: 0, duration: 0.8, delay: i * 0.1
-        });
+        gsap.to(card, { scrollTrigger: { trigger: card, start: "top 90%" }, opacity: 1, y: 0, duration: 0.8, delay: i * 0.1 });
       });
     }
   }, [isLoading]);
 
   return (
     <>
-      {/* ЭКРАН ЗАГРУЗКИ */}
       {isLoading && (
         <div className="loader">
           <div className="loader-text">PREPARING PROTOCOL...</div>
@@ -105,48 +72,39 @@ function App() {
         </div>
       )}
 
-      {/* ОСНОВНОЙ КОНТЕНТ */}
       <div className={`app-container ${isLoading ? 'hidden' : 'visible'}`}>
         
-        {/* Логотип (старое меню убрали, оставили только лого) */}
-        <nav>
-          <div className="logo">DMITRY OSITKOVSKIY</div>
-        </nav>
+        {/* ВЕРХНЕЕ МЕНЮ (NAV) УДАЛЕНО ПОЛНОСТЬЮ, ЧТОБЫ НЕ МЕШАТЬ ТЕКСТУ */}
 
-        {/* HERO SECTION */}
         <section className="hero" ref={heroRef} onMouseMove={handleMouseMove} id="about">
-          {/* ФОН */}
           <div className="reveal-bg" style={{ backgroundImage: 'url(/bg.jpg)' }}></div>
           
-          {/* ЛАЗЕР (Сдвинут влево и опущен вниз) */}
           <div className="laser-wrapper">
              {!isLoading && (
                <LaserFlow 
                  color="#8b5cf6" 
-                 flowSpeed={0.5} 
+                 flowSpeed={0.4} 
                  wispDensity={1.5}
                  
-                 horizontalBeamOffset={0.1} /* Сдвиг влево */
-                 verticalBeamOffset={-0.5}  /* Сдвиг вниз к полу */
-                 
-                 horizontalSizing={1.0}
-                 verticalSizing={1.7}
+                 /* Адаптивные настройки лазера */
+                 horizontalBeamOffset={isMobile ? 0 : 0.2} 
+                 verticalBeamOffset={isMobile ? -0.5 : -0.8}
+                 horizontalSizing={isMobile ? 2.0 : 1.0} /* Шире на телефоне */
+                 verticalSizing={isMobile ? 3.0 : 1.0}   /* Выше на телефоне */
                />
              )}
           </div>
           
-          {/* ТЕКСТ (Слева) */}
           <div className="hero-content">
-            <h1>Преподаватель из<br /> <span className="accent-text">Президентского Протокола</span></h1>
+            {/* ИЗМЕНИЛ ТЕКСТ НА ДИПЛОМАТИЧЕСКОГО */}
+            <h1>Преподаватель из<br /> <span className="accent-text">Дипломатического Протокола</span></h1>
             <p>Английский и Арабский языки для бизнеса и дипломатии.</p>
             <a href="#contact" className="cta-btn">Записаться на консультацию</a>
           </div>
 
-          {/* ФОТО (Справа, большое) */}
           <img src="/hero-photo.png" className="hero-photo" alt="Дмитрий Оситковский" />
         </section>
 
-        {/* --- СЕКЦИЯ ОПЫТ --- */}
         <section id="experience">
           <h2 className="section-title">Мой Путь</h2>
           <div className="experience-container">
@@ -162,7 +120,6 @@ function App() {
           </div>
         </section>
 
-        {/* --- СЕКЦИЯ УСЛУГИ --- */}
         <section id="services">
           <h2 className="section-title">Стоимость обучения</h2>
           <div className="services-grid">
@@ -172,7 +129,6 @@ function App() {
           </div>
         </section>
 
-        {/* --- СЕКЦИЯ КОНТАКТЫ --- */}
         <section id="contact">
           <h2 className="section-title">Связаться со мной</h2>
           <div className="contact-container">
@@ -183,13 +139,7 @@ function App() {
         
         <footer>© 2025 Дмитрий Оситковский. Все права защищены.</footer>
 
-        {/* 3. ВСТАВЛЯЕМ НОВОЕ МЕНЮ В САМЫЙ НИЗ */}
-        <Dock 
-          items={items}
-          panelHeight={68}
-          baseItemSize={50}
-          magnification={70}
-        />
+        <Dock items={items} panelHeight={68} baseItemSize={50} magnification={70} />
 
       </div>
     </>
