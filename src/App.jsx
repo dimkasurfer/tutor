@@ -13,7 +13,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
 
-  // Следим за размером экрана для адаптации лазера
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 900);
     window.addEventListener('resize', handleResize);
@@ -74,7 +73,7 @@ function App() {
 
       <div className={`app-container ${isLoading ? 'hidden' : 'visible'}`}>
         
-        {/* ВЕРХНЕЕ МЕНЮ (NAV) УДАЛЕНО ПОЛНОСТЬЮ, ЧТОБЫ НЕ МЕШАТЬ ТЕКСТУ */}
+        {/* ВЕРХНЕЕ МЕНЮ УБРАНО ПОЛНОСТЬЮ */}
 
         <section className="hero" ref={heroRef} onMouseMove={handleMouseMove} id="about">
           <div className="reveal-bg" style={{ backgroundImage: 'url(/bg.jpg)' }}></div>
@@ -86,22 +85,24 @@ function App() {
                  flowSpeed={0.4} 
                  wispDensity={1.5}
                  
-                 /* Адаптивные настройки лазера */
-                 horizontalBeamOffset={isMobile ? 0 : 0.2} 
-                 verticalBeamOffset={isMobile ? -0.5 : -0.8}
-                 horizontalSizing={isMobile ? 2.0 : 1.0} /* Шире на телефоне */
-                 verticalSizing={isMobile ? 3.0 : 1.0}   /* Выше на телефоне */
+                 /* НАСТРОЙКИ ДЛЯ ТЕЛЕФОНА (isMobile) */
+                 /* Если мобильный: сдвигаем лазер вправо (0.4) и делаем его вертикальным столбом */
+                 horizontalBeamOffset={isMobile ? 0.4 : 0.2} 
+                 verticalBeamOffset={isMobile ? -0.2 : -0.8}
+                 horizontalSizing={isMobile ? 3.0 : 1.0} 
+                 verticalSizing={isMobile ? 5.0 : 1.0}   
                />
              )}
           </div>
           
           <div className="hero-content">
-            {/* ИЗМЕНИЛ ТЕКСТ НА ДИПЛОМАТИЧЕСКОГО */}
+            {/* ИЗМЕНИЛ ТЕКСТ */}
             <h1>Преподаватель из<br /> <span className="accent-text">Дипломатического Протокола</span></h1>
             <p>Английский и Арабский языки для бизнеса и дипломатии.</p>
             <a href="#contact" className="cta-btn">Записаться на консультацию</a>
           </div>
 
+          {/* Фото грузится, но CSS скроет его на мобильном */}
           <img src="/hero-photo.png" className="hero-photo" alt="Дмитрий Оситковский" />
         </section>
 
@@ -114,6 +115,7 @@ function App() {
                 <div className="timeline-item"><span className="year">2023</span><div className="role">Атташе и Дипломатия</div><p className="desc">Атташе официальных лиц и делегаций.</p></div>
                 <div className="timeline-item"><span className="year">2024-2025</span><div className="role">Международные Саммиты</div><p className="desc">Участие в саммитах БРИКС, спикер в ОАЭ.</p></div>
               </div>
+              {/* ФОТО БУДЕТ ЗДЕСЬ НА МОБИЛЬНОМ */}
               <div className="experience-image-block">
                   <img src="/path-photo.png" className="experience-photo" alt="Мой путь" />
               </div>

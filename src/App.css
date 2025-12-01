@@ -17,8 +17,6 @@ body, html, #root {
 h1, h2, h3 { font-family: 'Playfair Display', serif; }
 a { text-decoration: none; color: inherit; transition: 0.3s; }
 
-/* NAV (Удален в JSX, удаляем и стили, чтобы не мешались) */
-
 /* --- HERO SECTION --- */
 .hero {
   position: relative;
@@ -62,7 +60,7 @@ a { text-decoration: none; color: inherit; transition: 0.3s; }
 }
 .cta-btn:hover { background: var(--accent-color); color: #fff; box-shadow: 0 0 20px var(--accent-color); }
 
-/* ФОТО (КОМПЬЮТЕРНАЯ ВЕРСИЯ - НЕ ТРОГАЕМ) */
+/* ФОТО (КОМПЬЮТЕРНАЯ ВЕРСИЯ) */
 .hero-photo {
   position: absolute;
   bottom: -5vh;
@@ -97,7 +95,7 @@ section:not(.hero) { padding: 100px 10%; position: relative; z-index: 5; backgro
 .card:hover { transform: translateY(-10px); border-color: var(--accent-color); }
 .price { font-size: 1.8rem; display: block; margin: 20px 0; color: #fff; }
 
-footer { padding: 40px; text-align: center; color: #666; border-top: 1px solid #222; background: #000; padding-bottom: 120px; /* Отступ для меню */ }
+footer { padding: 40px; text-align: center; color: #666; border-top: 1px solid #222; background: #000; padding-bottom: 120px; }
 
 .loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; }
 .loader-text { color: var(--accent-color); font-weight: 800; letter-spacing: 3px; margin-bottom: 20px; animation: pulse 1.5s infinite; }
@@ -112,42 +110,30 @@ footer { padding: 40px; text-align: center; color: #666; border-top: 1px solid #
 @media (max-width: 900px) {
   .hero { 
     flex-direction: column; 
-    justify-content: flex-start; /* Начинаем сверху */
+    justify-content: center; /* Центрируем по вертикали */
     padding-left: 0; 
-    text-align: center; 
-    padding-top: 50px; /* Отступ сверху */
+    text-align: left; /* Текст слева */
+    padding-top: 0;
   }
 
-  /* 1. Уменьшаем текст, чтобы влезал */
+  /* 1. Скрываем фото на главном экране телефона */
+  .hero-photo {
+    display: none !important;
+  }
+
+  /* 2. Уменьшаем текст */
   .hero-content { 
     width: 100%; 
-    padding: 0 20px; 
-    z-index: 20; 
-    margin-bottom: 20px;
+    padding: 0 30px; /* Отступы по бокам */
+    margin-bottom: 0;
+    max-width: 100%;
   }
-  .hero h1 { font-size: 2.2rem; } /* Уменьшили шрифт */
+  .hero h1 { font-size: 1.8rem; line-height: 1.3; } /* Еще меньше шрифт */
   .hero p { font-size: 1rem; }
 
-  /* 2. Исправляем фото (чтобы не было сплющено) */
-  .hero-photo {
-    position: relative; /* Возвращаем в поток */
-    right: auto; 
-    bottom: auto;
-    
-    width: 100%;  /* На всю ширину */
-    height: auto; /* Высота авто - чтобы не плющило! */
-    max-height: 50vh; /* Ограничиваем высоту половиной экрана */
-    
-    object-fit: contain; /* Сохраняем пропорции */
-    object-position: bottom center;
-    
-    transform: none; /* Убираем зум */
-    margin-top: auto; /* Прижимаем к низу секции */
-    opacity: 1; 
-    z-index: 10;
-  }
+  /* 3. Фото в блоке "Опыт" делаем видным */
+  .experience-container { flex-direction: column-reverse; /* Фото сверху таймлайна, если хочешь */ }
+  .experience-image-block { margin-bottom: 40px; width: 100%; }
   
-  /* Увеличиваем отступы секций */
   section:not(.hero) { padding: 60px 20px; }
-  .nav-links { display: none; }
 }
